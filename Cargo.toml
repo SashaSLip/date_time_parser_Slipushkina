@@ -1,0 +1,13 @@
+[package]
+name = "date_time_parser_Slipushkina"
+version = "0.1.0"
+edition = "2024"
+description = "A simple Rust parser for dates in ISO (YYYY-MM-DD) and European (DD/MM/YYYY) formats."
+license = "MIT"
+readme = "README.md"
+
+[dependencies]
+thiserror = "1.0"
+
+[dev-dependencies]
+anyhow = "1.0"
