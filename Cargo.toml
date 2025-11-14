@@ -2,7 +2,7 @@
 name = "date_time_parser_Slipushkina"
 version = "0.1.0"
 edition = "2024"
-description = "A simple Rust parser for dates in ISO (YYYY-MM-DD) and European (DD/MM/YYYY) formats."
+description = "A parser for dates in ISO (YYYY-MM-DD) and European (DD/MM/YYYY) formats and times in 24-hour and 12-hour formats"
 license = "MIT"
 readme = "README.md"
 

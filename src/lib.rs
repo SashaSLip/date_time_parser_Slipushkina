@@ -1,4 +1,4 @@
-// Performed by Slipushkina Oleksandra
+/// Performed by Slipushkina Oleksandra
 
 use thiserror::Error;
 
@@ -7,6 +7,12 @@ pub struct DateSimple {
     pub year: i32,
     pub month: u32,
     pub day: u32,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct TimeSimple {
+    pub hour: u8,
+    pub minute: u8,
 }
 
 #[derive(Error, Debug)]
@@ -30,6 +36,15 @@ pub fn parse_date(input: &str) -> Result<DateSimple, ParseError> {
             "unknown date format: {}",
             s
         )))
+    }
+}
+
+pub fn parse_time(input: &str) -> Result<TimeSimple, ParseError> {
+    let s = input.trim();
+    if s.ends_with("AM") || s.ends_with("PM") {
+        parse_time_12(s)
+    } else {
+        parse_time_24(s)
     }
 }
 
@@ -82,3 +97,61 @@ fn validate_date(year: i32, month: u32, day: u32) -> Result<(), ParseError> {
     Ok(())
 }
 
+pub fn parse_time_24(s: &str) -> Result<TimeSimple, ParseError> {
+    let parts: Vec<&str> = s.trim().split(':').collect();
+    if parts.len() != 2 {
+        return Err(ParseError::InvalidFormat(format!(
+            "expected HH:MM 24-hour format: {}",
+            s
+        )));
+    }
+    let hour: u8 = parts[0].parse()?;
+    let minute: u8 = parts[1].parse()?;
+    if hour > 23 {
+        return Err(ParseError::OutOfRange(format!("hour {} out of range", hour)));
+    }
+    if minute > 59 {
+        return Err(ParseError::OutOfRange(format!("minute {} out of range", minute)));
+    }
+    Ok(TimeSimple { hour, minute })
+}
+
+pub fn parse_time_12(s: &str) -> Result<TimeSimple, ParseError> {
+    let s = s.trim();
+    let am_pm = if s.ends_with("AM") {
+        "AM"
+    } else if s.ends_with("PM") {
+        "PM"
+    } else {
+        return Err(ParseError::InvalidFormat(format!(
+            "missing AM/PM in 12-hour format: {}",
+            s
+        )));
+    };
+
+    let time_part = s.trim_end_matches(am_pm).trim();
+    let parts: Vec<&str> = time_part.split(':').collect();
+    if parts.len() != 2 {
+        return Err(ParseError::InvalidFormat(format!(
+            "expected HH:MM 12-hour format: {}",
+            s
+        )));
+    }
+    let mut hour: u8 = parts[0].parse()?;
+    let minute: u8 = parts[1].parse()?;
+    if hour == 0 || hour > 12 {
+        return Err(ParseError::OutOfRange(format!("hour {} out of range", hour)));
+    }
+    if minute > 59 {
+        return Err(ParseError::OutOfRange(format!("minute {} out of range", minute)));
+    }
+
+    if am_pm == "PM" && hour != 12 {
+        hour += 12;
+    }
+    if am_pm == "AM" && hour == 12 {
+        hour = 0;
+    }
+
+    Ok(TimeSimple { hour, minute })
+}
