@@ -1,12 +1,14 @@
+# time_date_parser_Slipushkina
+=======
 # date_time_parser_Slipushkina
 
 ## Brief Description
 
-`date_time_parser_Slipushkina` — це парсер, який розпізнає дати та час у двох найпоширеніших форматах:
+`date_time_parser_Slipushkina` — це парсер, який розпізнає дати і час у двох найпоширеніших форматах:
 1. **ISO формат:** `YYYY-MM-DD`
 2. **Європейський формат:** `DD/MM/YYYY`
-3. **Time 24-hour format:** `HH:MM` 
-4. **Time 12-hour format with AM/PM:** `HH:MM AM/PM` 
+3. **24-hour format for time:** `HH:MM` 
+4. **12-hour format for time:** `HH:MM AM/PM` 
 
 ## Technical Description
 
@@ -14,8 +16,8 @@
 Парсер приймає рядок з датою і визначає формат автоматично:
 - Якщо містить `-` → використовується правило **DATE_ISO**
 - Якщо містить `/` → використовується правило **DATE_EURO**
-- Якщо містить годину в 24-годинному форматі (HH:MM) → використовується правило **TIME_24**
-- Якщо містить позначку AM/PM → використовується правило **TIME_12**
+- Якщо містить `:` → використовується правило **TIME_24** 
+- Якщо містить `AM` або `PM` → використовується правило **TIME_12** 
 
 Використано:
 - **`thiserror`** — для зручного опису помилок у бібліотеці (`lib.rs`)
@@ -25,7 +27,7 @@
 - **`cargo test`** — для перевірки правильності парсингу
 
 
-Після розбору повертаються структури:
+Після розбору повертається структура:
 ```rust
 DateSimple {
   year: i32,
@@ -34,7 +36,6 @@ DateSimple {
 }
 
 TimeSimple {
-    hour: u32,
-    minute: u32
+  hour: u32,
+  minute: u32
 }
-
