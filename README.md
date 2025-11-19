@@ -4,6 +4,8 @@
 
 ## Brief Description
 
+crates.io - https://crates.io/crates/date_time_parser_slipushkina
+
 `date_time_parser_Slipushkina` — це парсер, який розпізнає дати і час у двох найпоширеніших форматах:
 1. **ISO формат:** `YYYY-MM-DD`
 2. **Європейський формат:** `DD/MM/YYYY`
