@@ -4,7 +4,7 @@ use std::env;
 use std::fs;
 use std::process;
 
-use date_time_parser_Slipushkina::{parse_date, parse_time};
+use date_time_parser_slipushkina::{parse_date, parse_time};
 
 fn print_help() {
     println!("Date Time Parser CLI");

@@ -1,5 +1,5 @@
 [package]
-name = "date_time_parser_Slipushkina"
+name = "date_time_parser_slipushkina"
 version = "0.1.0"
 edition = "2024"
 description = "A parser for dates in ISO (YYYY-MM-DD) and European (DD/MM/YYYY) formats and times in 24-hour and 12-hour formats"
